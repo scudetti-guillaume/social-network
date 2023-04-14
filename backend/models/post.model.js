@@ -36,8 +36,25 @@ const PostSchema = new mongoose.Schema(
         video: {
             type:String,
         },
-        signal:{
-            type : Boolean
+        banuser: {
+            type: Boolean,
+            default: false
+          },
+        signalBy :{
+            type:[String],
+        },
+        signalProfil :{
+            type:[String],
+        },
+        signalpost:{
+            type : [{
+                signalByFullname : String,
+                signalById : String,
+                signalUserFullname: String,
+                signalUserId: String,
+                signalPostId : String,
+                date: String,
+            }]
         },
         posterfollower:{
            type : [String]
@@ -46,9 +63,6 @@ const PostSchema = new mongoose.Schema(
             type : [String]
         },
 
-        signalBy:{
-            type: [String]
-        },
         likers: {
             type: [String],
             required: true,
@@ -57,14 +71,24 @@ const PostSchema = new mongoose.Schema(
             type: String
         },
         comments: {
-            type: [
+           type :[ 
                 {
-                    commenterId: String,
-                    commenterPseudo: String,
-                    text: String,
-                    timestamp: Number,
-                }
-            ],
+                    postCommentId: String,
+                    commenterId:String,
+                    commenterFirstname:  String,
+                    commenterLastname:String,
+                    commenterFullname: String,
+                     commenterPicture: String,
+                     comment:  {
+                     type: String,
+                     trim: true,
+                     maxlenght: 200,
+                     required : true
+                     },
+                    commentLikers: [String],
+                    commentDate :  String,
+                    }
+                    ]
         },
     },
     {

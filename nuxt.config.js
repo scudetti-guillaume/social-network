@@ -2,12 +2,14 @@ import colors from 'vuetify/es5/util/colors'
 // npm run dev
 
 export default ({
- 
+   server: {
+    port: 3000,
+  },
 // export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: 'groupamania',
-    title: 'Groupomania',
+    titleTemplate: 'Soc-Net',
+    title: 'Soc-Net',
     htmlAttrs: {
       lang: 'fr',
   
@@ -51,7 +53,7 @@ export default ({
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify','@nuxt/typescript-build'
+    '@nuxtjs/vuetify',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

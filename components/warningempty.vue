@@ -6,7 +6,7 @@
         <p class="logo-disconnect-delete"><img class="logo-white" src="../logo/logo.png" alt="logo" />
         <span>La team GROUPOMANIA </span>
         </p>
-      <p id="span-del-post"> ⚠️ Oups votre bio est vide de chez vide ⚠️ vous ne pas pouvez enregistrer ça </p>
+      <p id="span-del-post"> ⚠️ Oups votre bio est vide de chez vide ⚠️ vous ne pouvez pas enregistrer ça </p>
        <!-- <p>cette action est irreversible </p> -->
        <v-btn id="btn-notdelete-comfirm" @click="$emit('close-modale-empty')" ><span >Retour</span></v-btn>
       <!-- <p class="comfirm-span-delete">si tel est votre choix ...</p> -->

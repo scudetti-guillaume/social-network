@@ -1,9 +1,9 @@
 <template>
-  <div id="test" class="overlay-sign-up ">
+  <div  class="overlay-signup">
     <div>
       <TermOfUse v-show="termofuse" @close-modal-use="termofuse = false" />
     </div>
-    <v-col class="overlaybis-sign-up">
+    <v-col class="main d-flex justify-center align-center overlaybis-signup">
       <v-col class="form-sign">
         <v-card id="logo-form" class="logo py-4 d-flex justify-center"
           ><h1><span id="form-span1">Vous inscrire </span></h1></v-card
@@ -12,18 +12,6 @@
           <v-col id="logo-form2" cols="12" sm="12" md="12">
             <v-card-text>
               <form @submit.prevent class="form-container" ref="formsignup">
-                <!-- <label for="avatar">
-                  <h2 class="titleh2">Votre photo / avatar</h2>
-                </label>
-                <img class="form-avatar-dl" src="../logo/avatar1.png" />
-                <input
-                  class="form-avatar"
-                  type="file"
-                  value="test"
-                  name="avatar"
-                  placeholder="votre photo/avatar"
-                />
-                <v-spacer /> -->
 
                 <label for="nom">
                   <h2 class="titleh2">Nom</h2>
@@ -84,7 +72,7 @@
                 <v-spacer />
                 <label for="pass">
                   <h2 class="titleh2">
-                    Mot de passe Groupomania-socialnetwork
+                    Mot de passe Groupomania
                   </h2>
                 </label>
 
@@ -113,7 +101,7 @@
                 <input
                   id="passcom"
                   v-model.lazy="pswcom"
-                  :disabled="!passwordValidation.valid"
+         
                   name="passcom"
                   class="form-input"
                   type="password"
@@ -156,10 +144,7 @@
                 >
                   <h2 class="h2-form">Inscritpion</h2>
                 </button>
-                <!-- &nbsp
-                <button href="./index.vue" class="btn cancel">
-                  <h2 class="h2-form">Annuler</h2>
-                </button> -->
+
               </form>
 
               <button id="form-span2">
@@ -185,21 +170,17 @@ import TermOfUse from "../components/term-of-use.vue";
 export default {
   name: "IndexPage",
   components: { TermOfUse },
-  // props:{
-  //   psw:"",
-  //   pswcom:""
-  // },
+
   data() {
     return {
       rules: [
-        { message: "1 chiffre,",regex: /[0-9]+/,},
+        { message: " 1 chiffre,",regex: /[0-9]+/,},
         { message: "1 miniscule,", regex: /[a-z]+/ },
         { message: "1 majuscule,", regex: /[A-Z]+/ },
         { message: "1 caractere speciale", regex: /[!@#$%^&]+/ },
         { message: "8 caracteres minimun", regex: /.{8,}/ },
       ],
-      // testpsw:true,
-      // passwordValidation.valid :false,
+  
       termofuse: false,
       successreg: "",
       infomsg: "",
@@ -283,13 +264,16 @@ export default {
           this.successreg = "Compte creer avec succée, Bienvenue";
           window.prompt("entrer la clé reçu par mail ( n'importe quel touche)")
           setTimeout(() => {
+            window.location.href = "./";
+          }, 2000);
+          setTimeout(() => {
             this.firstname=""
           this.lastname="",
           this.badge="",
           this.email="",
-          this.psw="",
-            window.location.href = "./";
-          }, 2000);
+          this.psw="";
+          }, 2500)
+
         })
         .catch((error) => {
           this.firstname=""
@@ -323,7 +307,7 @@ export default {
 </script>
 
 <style lang="scss">
-.overlay-sign-up {
+.overlay-signup {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -358,11 +342,9 @@ export default {
   padding-right: 3px;
 }
 
-.overlaybis-sign-up {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+div.overlaybis-signup {
   // height: 100%;
+  height: auto;
   // width: 50%;
   padding-left: 10%;
   padding-right: 10%;
@@ -380,9 +362,7 @@ export default {
   border: solid 5px $secondary;
   border-radius: 10%;
   padding: 0;
-  // background-color:$tertiary;
   overflow: hidden;
-  // background-color: #fff;
 }
 
 input.form-input {
@@ -432,14 +412,12 @@ h1 {
 
 .titleh2-check {
   color: $secondary;
-  // padding-bottom: 0.5rem;
-  //  margin-top: 1rem;
   color: $secondary;
 }
 .titleh2-check:hover {
   color: $primary;
   text-decoration: underline;
-  // font-size: 1.001rem;
+
 }
 
 //______________________________\\
@@ -503,7 +481,7 @@ div.logo {
   text-decoration: none;
   color: white;
   border: solid 2px $secondary;
-  border-radius: 30%;
+  border-radius: 15px;
 }
 
 #link-sign:hover {

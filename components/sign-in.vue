@@ -1,15 +1,26 @@
 <template>
-  <div class="overlay-signin">
-    <v-col class="overlaybis-signin" justify="center" align="center">
+  <div class="overlay">
+    <div class="overlaybis" justify="center" align="center">
       <div>
         <SignUp v-show="showSignUp" @close-modal="showSignUp = false" />
       </div>
 
-      <v-card id="header-index"  >
-        <h2 class="h2-sign-in"><button class="btn-login"> connexion </button></h2>
+      <v-card
+        id="header-index"
+        class="logo py-4 d-flex justify-center align-center"
+      >
+        <h2 class="h2-sign-in">
+          <button class="btn-login">
+            connexion
+          </button>
+        </h2>
         <v-card-text class="sign-up-link">
-          <span class="span-instruction">Vous n'avez pas encore de compte ?</span>
-          <span class="span-sign-up" @click.stop="showSignUp = true">Créer un compte</span>
+          <span class="span-instruction"
+            >Vous n'avez pas encore de compte ?</span
+          >
+          <span class="span-sign-up" @click.stop="showSignUp = true">
+            Créer un compte
+          </span>
         </v-card-text>
       </v-card>
       <v-card id="body-index">
@@ -18,7 +29,7 @@
             <div class="form-popup" id="popup-Form">
               <form @submit.prevent class="form-container">
                 <label for="email">
-                  <h2>Votre mail Groupomania</h2>
+                  <h2>Votre mail Soc-Net</h2>
                 </label>
                 <v-spacer />
                 <input
@@ -43,7 +54,7 @@
                 />
                 <v-spacer />
                 <label for="psw">
-                  <h2>Mot de passe Groupomania-socialnetwork</h2>
+                  <h2>Mot de passe Soc-Net</h2>
                 </label>
                 <v-spacer />
                 <input
@@ -56,9 +67,9 @@
                 />
                 <v-spacer />
                 <div class="errormsg">{{ infomsg }}</div>
-                <div v-if="!successreg" class="successmsg">{{ successreg }}</div>
+                <div v-if="successreg" class="successmsg">{{ successreg }}</div>
                 <button
-                  class="btn-valid"
+                  class="btn-valid-login"
                   @click="verifyUser"
                   :disabled="validatedForm"
                   type="submit"
@@ -70,7 +81,7 @@
           </v-card-text>
         </v-col>
       </v-card>
-    </v-col>
+    </div>
   </div>
 </template>
 
@@ -84,16 +95,6 @@ export default {
   name: "SignInPage",
   components: { SignUp },
   computed: {
-    //     mailValidation(){
-    //     // ====== si bug doublebackslash new regexp consum one bs =======\\
-    //   let mail =  new RegExp('[a-z]+\.[a-z]@groupomania.fr')
-    //   let testMail = mail.test(this.email)
-    // if(testMail = true){
-    //   return true
-    //  }else{
-    //   return false
-    //  }
-    // },
 
     validatedForm() {
       if (this.badge != "" && this.email != "" && this.psw != "") {
@@ -110,11 +111,7 @@ export default {
      
     async verifyUser() {
        axios.defaults.withCredentials = true;
-      // axios.defaults.withCredentials = true;
-      //      if(mailValidation = false){
-      //    this.infomsg = "il y a une erreur, Réessayer";
-      //     return false
-      //  }
+
 
       await axios
         .post("http://localhost:5000/api/user/login", {
@@ -124,20 +121,15 @@ export default {
         })
         .then((user) => {
           const userId = user.data.user;
+          // window.prompt("entrer la clé reçu par mail (n'importe lequel)");
           // => *TODO capcha ou systeme de mail comfirmation register <= \\
           this.successreg = "Connexion reussit, Bienvenue";
-      //     axios.get(`http://localhost:5000/jwtid`)
-      // .then((res) => { this.userjwtid = res.data
-      //     }).catch((error) => {
-      //     console.log(error);
-      //       })
-            window.location.reload()  
+
+          this.show = false;
           setTimeout(() => {
-    
-            this.$emit("close-modale-signin");
-            this.$emit('open-modale-loader')
-             
-          }, 1000);
+            this.$emit("close-modale", true);
+               window.location.reload()  
+          }, 1500);
           this.userid = userId;
         })
         .catch((error) => {
@@ -147,41 +139,6 @@ export default {
           }, 3000);
         });
 
-      // await axios
-      //   .get(
-      //     `http://localhost:5000/api/user/${this.userid}`,
-       
-      //     // ,{'headers': { 'Authorization': this.$cookie.get('token')}}
-      //   )
-      //   .then((res, req) => {
-     
-      //     console.log(res.data);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
-      // await axios
-      //   .get(`http://localhost:5000/jwtid`,
- 
-      //       )
-      //   .then((res) => {
-      //     //   console.log(res.headers["Set-Cookie"]);
-      //     // console.log(req);
-      //     console.log(res);
-      //   })
-      //   .catch((err)=>{
-
-      //     console.log(err);
-      //   });
-
-      //  axios.get(`http://localhost:5000/me`)
-      // .then((res) => {
-      //        console.log(res.headers["Set-Cookie"]);
-      //   console.log(res.cookies.jwt);
-
-      // }).catch((error)=>{
-      //    error
-      // })
     },
   },
 
@@ -202,30 +159,37 @@ export default {
 </script>
 
 <style lang="scss">
-.overlay-signin {
+
+// #modal-signin {
+//   width: 100%;
+
+
+// }
+
+// .overlay {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 100%;
+//   top: 0px;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   position: fixed;
+//   visibility: visible;
+//   opacity: 1;
+//   background-color: rgba(0, 0, 0, 0.7);
+//   transition: opacity 0.4s;
+//   z-index: 10;
+// }
+
+.overlaybis{
   display: flex;
-  justify-content: center;
-  align-items: center;
-  // flex-direction: column;
-  width: 100%;
-  top: 0px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  position: fixed;
-  visibility: visible;
-  opacity: 1.5;
-  background: linear-gradient(to left ,$primary,$secondary);
-  transition: opacity 0.5s;
-  z-index: 10;
-}
-
-
-div.overlaybis-signin {
-  height: 50%;
-  width: 50%;
-  padding-left: 10%;
-  padding-right: 10%;
+  flex-direction: column;
+  max-width: 800px;
+  width: 50vw;
+  height: auto;
+  
 }
 
 #header-index {
@@ -235,16 +199,13 @@ div.overlaybis-signin {
   align-items: center;
   width: auto;
   height: auto;
-  // white-space: nowrap;
-  // overflow: hidden;
-  // text-overflow:ellipsis;
   border: solid 5px $secondary;
+  border-radius: 10px;
   margin-bottom: 2px;
   background: $tertiary;
 }
 
 h2.h2-sign-in {
-  margin-top: 5px;
   padding-bottom: 0.5%;
   padding-top: 0;
 }
@@ -272,27 +233,30 @@ h2.h2-sign-in {
 #body-index {
   border: solid 5px $secondary;
   background: $tertiary;
+  border-radius: 10px;
 }
 
-.btn-valid:disabled {
+.btn-valid-login:disabled {
   padding-right: 1rem;
   padding-left: 1rem;
-  border-radius: 30%;
+  border-radius: 15px;
   margin-top: 20px;
   border: solid 2px $secondary;
   background: #ccc;
   &:hover {
+    border-radius: 15px;
     cursor: none;
     background: #ccc;
     color: red;
   }
 }
 
-.btn-valid {
+.btn-valid-login {
   height: 50px;
   padding-right: 1rem;
   padding-left: 1rem;
-  border-radius: 30%;
+  // border-radius: 15px;
+   border-radius: 10px;
   margin-top: 20px;
   border: solid 2px $secondary;
   &:hover {
@@ -305,7 +269,7 @@ h2.h2-sign-in {
   justify-content: center;
   align-items: center;
   border: solid 2px $secondary;
-  border-radius: 30%;
+  border-radius: 15px;
   padding-left: 5px;
   padding-right: 5px;
   text-decoration: none;
@@ -325,11 +289,6 @@ h2 {
   padding-top: 1rem;
 }
 
-// .h2-form:hover {
-//   background-color: $secondary;
-//   color: $tertiary;
-// }
-
 .form-input {
   border: solid 2px $secondary;
   font-size: 1.5em;
@@ -345,44 +304,4 @@ input {
   padding: 5px;
 }
 
-// .btn-sign {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   border: solid 2px $secondary;
-//   border-radius: 30%;
-//   margin-left: 10px;
-//   padding-left: 5px;
-//   padding-right: 5px;
-//   text-decoration: none;
-//   color: white;
-//   // white-space: nowrap;
-//   // overflow: hidden;
-//   // text-overflow: ellipsis;
-//   cursor: pointer;
-// }
-
-// .btn-sign:hover {
-//   background-color: $secondary;
-//   color: $tertiary;
-// }
-
-// h1{
-// display: flex;
-// width: 100%;
-// height: auto;
-// flex-wrap: nowrap;
-// white-space: nowrap;
-// overflow: hidden;
-// text-overflow: ellipsis;
-
-// }
-
-// .logo{
-//   display: flex;
-//   width: 100%;
-//   flex-direction: row;
-//   flex-wrap:wrap;
-
-// }
 </style>

@@ -2,7 +2,7 @@ const UserModel = require("../models/user.model");
 const EmployeesModel = require("../models/employee.model");
 const jwt = require("jsonwebtoken");
 const { signUpErrors, signInErrors } = require("../utils/errors.utils");
-const { log } = require("console");
+
 
 // valid token jwt duration \\
 
@@ -21,43 +21,43 @@ const createToken = (id) => {
 // signup end point \\
 
 exports.signUp = async (req, res, next) => {
-  
   const { lastname, firstname, email, badge, password } = req.body;
   const find = await EmployeesModel.find({
     lastname: lastname,
     firstname: firstname,
     email: email,
     badge: badge,
-  }).count(); 
-console.log(find);
+  }).count();
+  //* option controller des users \\
+  //* pour descacitver commenter cette conditon ( n'oublier pas de commenter' }' du else ligne 60)
+  //* --------------------------------------------------------------------- \\
   if (find != 1) {
-    return res.status(401).json({ error: "echec veuillez réessayer, si le probleme persiste contacter un administrateur",
-});
-  }else{
+    return res
+      .status(401)
+      .json({
+        error:
+          "echec veuillez réessayer, si le probleme persiste contacter un administrateur",
+      });
+  } else {
+    //* --------------------------------------------------------------------- \\
+    try {
+      const userNew = new UserModel({
+        lastname: lastname,
+        firstname: firstname,
+        email: email,
+        badge: badge,
+        password: password,
+      });
+      console.log(userNew);
 
+      await userNew.save();
 
- try {
-  const userNew =  new UserModel({lastname: lastname,firstname: firstname,email: email,badge: badge,password: password })
-  console.log( userNew);
- 
-  await userNew.save();
-
-  return res.status(201).json(userNew);
-} catch (err) {
-console.log(err);
+      return res.status(201).json(userNew);
+    } catch (err) {
 
       const errors = signUpErrors(err);
-  //  return res.status(400).send(errors);
-
-}}
-  // .then(()=>{
-  //   // console.log(docs);
-  //   return res.status(201).json(test);
-  //   // next()
-  // }).catch((err) => {
-  //   const errors = signUpErrors(err);
-  //   res.status(400).send(errors);
-  // })
+    }
+  }
 };
 
 
@@ -66,16 +66,24 @@ console.log(err);
 exports.signIn = async (req, res) => {
   const { email, badge, password } = req.body;
   try {
+    const ban = UserModel.findById();
     const user = await UserModel.login(email, badge, password);
     const token = createToken(user._id);
     res.cookie("jwt", token, {
       // SameSite : None,
       session: false,
       maxAge: durationTokenLogin12,
-      secure:false,
+      secure: false,
       httpOnly: true,
     });
-    res.status(200).json({ user: user._id , token});
+    UserModel.findOne({ _id: user, ban: true }, (err, doc) => {
+      if (doc) {
+        res.cookie("jwt", "", { maxAge: durationTokenLogout }),
+        res.status(400).json("utilisateur banni");
+      } else {
+        res.status(200).json({ user: user._id, token });
+      }
+    });
   } catch (err) {
     const errors = signInErrors(err);
     res.status(401).send({ errors });
@@ -83,83 +91,67 @@ exports.signIn = async (req, res) => {
 };
 
 
-
-
-
-
-
 // logout end point \\
 
 exports.logout = (req, res) => {
-// console.log(req.cookies)
-// console.log(res.cookie)
-
-  res.cookie("jwt",'', { maxAge: durationTokenLogout })
+  // console.log(req.cookies)
+  // console.log(res.cookie)
+  
+  res.cookie("jwt", "", { maxAge: durationTokenLogout });
+  res.cookie("jwtadmin", "", { maxAge: durationTokenLogout });
   
   res.redirect("./");
 };
 
+// ======================== login and signup without badge and employees model ============================\\
 
+// exports.signUp = async (req, res, next) => {
+//   const { lastname, firstname, email, password } = req.body;
+//     try {
+//       const userNew = new UserModel({
+//         lastname: lastname,
+//         firstname: firstname,
+//         email: email,
+//         password: password,
+//       });
+//       console.log(userNew);
+//       await userNew.save();
 
-
-// signin end point header jwt \\
-
-// exports.signIn = async (req, res) => {
-//   const { email, badge, password } = req.body;
-//   try {
-//     const user = await UserModel.login(email, badge, password);
-//     const token = createToken(user._id);
-//     res.status(200).json({ user: user._id, token});
-//   } catch (err) {
-//     const errors = signInErrors(err);
-//     res.status(401).json({ errors });
-//   }
+//       return res.status(201).json(userNew);
+//     } catch (err) {
+//       console.log(err);
+//       const errors = signUpErrors(err);
+//     }
 // };
 
 
 
-
+// exports.signIn = async (req, res) => {
+//   const { email,password } = req.body;
+//   try {
+//     const ban = UserModel.findById();
+//     const user = await UserModel.login(email, password);
+//     const token = createToken(user._id);
+//     res.cookie("jwt", token, {
+//       // SameSite : None,
+//       session: false,
+//       maxAge: durationTokenLogin12,
+//       secure: false,
+//       httpOnly: true,
+//     });
+//     UserModel.findOne({ _id: user, ban: true }, (err, doc) => {
+//       if (doc) {
+//         res.cookie("jwt", "", { maxAge: durationTokenLogout }),
+//         res.status(400).json("utilisateur banni");
+//       } else {
+//         res.status(200).json({ user: user._id, token });
+//       }
+//     });
+//   } catch (err) {
+//     const errors = signInErrors(err);
+//     res.status(401).send({ errors });
+//   }
+// };
 
 //----------------------------------------end---------------------------------------------------------------------------------------\\
 
-//========================================================Code test or futur features=======================================================\\
-
-//_______________find and update ok ------------------------------\\\\\\\\\\\
-
-// exports.signUp = async (req, res, next) => {
-//   const { name, firstname, email, badge,password} = req.body
-// const  find = await UserModel.find({name:name, firstname:firstname,email:email,badge:badge}).count()
-//      console.log( find)
-//       if (!find || find > 2) {
-//         return res.status(401).json({ error: "signUp problem" })}
-//          try{
-//        await UserModel.findOneAndUpdate(
-//            { email: email} ,
-//         { password: password},
-//         { new: true, upsert: true, setDefaultsOnInsert: true}
-//         )
-//         .then((docs)=>res.send(docs))
-//         res.status(201).json({ message: "Vous vous etes enregistre " });
-//       }
-//     catch (err) {
-//     const errors = signUpErrors(err)
-
-//     res.status(400).json({ errors })
-//   }
-// };
-
-
-
-
-// exports.signUp = async (req, res, next) => {
-//   const { name,firstname, badge, email, password } = req.body;
-//   try {
-
-//     const user = new UserModel({ ...req.body, name:name ,firstname :firstname, badge: badge, email:email, password:password});
-//     res.status(201).json({ user: user._id });
-//   } catch (err) {
-//     const errors = signUpErrors(err);
-
-//     res.status(400).json({ errors });
-//   }
-// };

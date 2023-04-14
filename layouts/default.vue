@@ -1,15 +1,15 @@
 <template>
   <v-app dark>
-   
-
     <div>
-
-      <Loader v-show="showloader" @close-modale-loader="showloader = false" @open-modale-loader="true" />
-<!-- 
-      <SignIn id="modal-signin" v-show="show" @close-modale-signin="show = false" /> -->
+      <Waitload
+        v-show="showloader"
+        @close-modale-loader="showloader = false"
+        @open-modale-loader="true"
+      />
+      <SignIn id="modal-signin" v-show="show" @close-modale="show = false" />
     </div>
 
-    <!-- <v-navigation-drawer class="drawer-left" v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed app >
+    <!-- <v-navigation-drawer class="drawer-left" v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed app>
       <v-list class="temp">
         <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
           <v-list-item-action>
@@ -25,24 +25,28 @@
       <!-- <v-btn id="temp-menu" alt="menu" @click.stop="drawer = !drawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn> -->
-
-      <router-link id="btn-post-router" to="/" >
-        <!-- <v-btn  id="btn-post-nav" alt="menu"> -->
-          <v-icon>mdi-newspaper-variant-multiple-outline</v-icon>
-        <!-- </v-btn> -->
-        <!-- <v-btn v-else @click="url" active id="btn-post-nav-select" alt="menu">
-          <v-icon>mdi-newspaper-variant-multiple-outline</v-icon>
-        </v-btn> -->
+     
+      <router-link id="btn-post-router" to="/" title="page des publications">
+     
+        <v-icon>mdi-newspaper-variant-multiple-outline</v-icon>
+ 
       </router-link>
-      <router-link class="btn-post-router-plus" to="/postpage">
+ 
+      <router-link class="btn-post-router-plus" to="/postpage" title="page du chat">
         <!-- <v-btn id="btn-post-nav" alt="menu"> -->
-          <v-icon class="icon-btn-default">mdi-chat </v-icon>
+        <v-icon>mdi-chat </v-icon>
         <!-- </v-btn> -->
         <!-- <v-btn v-else active @click="url" id="btn-post-nav-select" alt="menu">
           <v-icon>mdi-chat </v-icon>
         </v-btn> -->
       </router-link>
 
+       <router-link v-if="this.role != undefined"  id="btn-post-router" to="/adminPage" title="page admin">
+     
+          <v-icon>mdi-shield-crown</v-icon>
+ 
+        </router-link>
+ 
       <!-- <v-btn @click="showpost = !showpost" id="btn-post-nav" alt="menu">
         <v-icon>mdi-newspaper-plus </v-icon>
         </v-btn>  -->
@@ -62,12 +66,19 @@
       </v-btn> -->
 
       <v-spacer />
-      <img class="logo-white" src="../logo/logo.png" />
-      <v-toolbar-title v-text="title" id="temp-title" alt="logo" />
+      <router-link id="router-main" to="/" title="page des publications">
+        <img class="logo-white" src="../logo/logo.png" to="/" alt="logo"/>
+        <v-toolbar-title v-text="title" id="temp-title" alt="logo" />
+      </router-link>
       <v-spacer />
-      <v-btn @click.stop="rightDrawer = !rightDrawer" id="temp-user">
-        <img v-if="urlpic !== '' && urlpic !== undefined" class="avatar" :src="urlpic" alt="photo de l'utilisateur" />
-        <div v-else id="avatar-empty">{{avatarpicempty}}</div>
+      <v-btn @click.stop="rightDrawer = !rightDrawer" id="temp-user" title="Votre profil">
+        <img
+          v-if="urlpic !== '' && urlpic !== undefined"
+          class="avatar"
+          :src="urlpic"
+          alt="photo de l'utilisateur"
+        />
+        <div v-else id="avatar-empty">{{ avatarpicempty }}</div>
       </v-btn>
       <!-- <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
@@ -75,20 +86,25 @@
     </v-app-bar>
     <v-main>
       <v-container>
-        
-
-        <transition name="test" mode="out-in">
-      
-<SignIn id="modal-signin" v-show="show" @close-modale-signin="show = false" />
-</transition>
-
         <Nuxt :key="componentKey" />
       </v-container>
     </v-main>
 
-    <v-navigation-drawer class="drawer-right" v-model="rightDrawer" :right="right" temporary fixed>
+    <v-navigation-drawer
+      class="drawer-right"
+      v-model="rightDrawer"
+      :right="right"
+      temporary
+      fixed
+    >
       <v-list>
-        <v-list-item v-for="(item, v) in itemsuser" :key="v" :to="item.to" router exact>
+        <v-list-item
+          v-for="(item, v) in itemsuser"
+          :key="v"
+          :to="item.to"
+          router
+          exact
+        >
           <v-list-item-action>
             <v-icon> {{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -101,36 +117,19 @@
     <v-footer :absolute="!fixed" app>
       <span>&copy; Groupomania socialNetwork res dev by scud </span>
     </v-footer>
- 
   </v-app>
 </template>
 
 <script>
 import axios from "axios";
-import Loader from "../components/Loader.vue";
-// // import disconnect from '../components/disconnect.vue';
 import SignIn from "../components/sign-in.vue";
-// import Post from "../components/postcomponent.vue";
-// import indexVue from "../pages/index.vue";
+import Waitload from "../components/Waitload.vue";
+
 
 export default {
-  // transition(to, from) {
-  //   if (!from) {
-  //     return 'slide-left'
-  //   }
-  //   return +to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
-  // },
-  transition: {
-    name: 'test',
-    mode: 'out-in'
-  },
   components: {
-    Loader,
-      // Loader: () => import(/* webpackPrefetch: true */"../components/Loader.vue"),
     SignIn,
-    // indexVue,
-    // modify: () => import(/* webpackPrefetch: true */"./index/modifytest.vue"),
-    //  Post
+    Waitload,
   },
   name: "DefaultLayout",
 
@@ -147,33 +146,27 @@ export default {
     //   }
     // },
 
- 
     getcolor() {
-      if (this.urlpic === '' || this.urlpic === undefined) {
-
-        this.avatarpicempty = this.name.split('')[0]
-        // let randomColor = Math.floor(Math.random()*16777215).toString(16);
-        document.getElementById('avatar-empty').style.backgroundColor = '#'
-      }
-    }
+      console.log("get" + this.avatarpicempty);
+      this.avatarpicempty = this.firstname.split("")[0].toLocaleUpperCase();
+    },
   },
 
-  computed: {
-
-  },
-
+  computed: {},
 
   data() {
     return {
-      show: false,
       showloader: true,
+      show: false,
       urlbtn: "",
       postbtn: false,
       componentKey: 0,
-      name: '',
-      avatarpicempty: '',
-      userjwtid: '',
-      urlpic: '',
+      firstname: "",
+      avatarpicempty: "",
+      userjwtid: "",
+      urlpic: "",
+      id:"",
+      role:"",
       right: true,
       drawer: false,
       miniVariant: false,
@@ -181,6 +174,7 @@ export default {
       clipped: false,
       fixed: false,
       log: false,
+      // showpost: false,
       showbtn: true,
       hoverbtn: false,
       itemsuser: [
@@ -212,88 +206,65 @@ export default {
         {
           icon: "mdi-delete-circle",
           title: "Supprimer mon compte",
-          to: "/deleteaccount",
+          to: "",
         },
       ],
       items: [
-        {
-          icon: " mdi-newspaper-variant-multiple-outline",
-          title: "le Groupo-book",
-          to: "/",
-        },
+        // {
+        //   icon: " mdi-newspaper-variant-multiple-outline",
+        //   title: "le Groupo-book",
+        //   to: "/",
+        // },
         //   {
         //   icon: "mdi-newspaper-plus ",
         //   title: "creer votre post",
         //   to: "/postpage",
         // },
-        {
-          icon: " mdi-chat",
-          title: "le Groupo-chat",
-          to: "/postpage",
-        },
+        // {
+        //   icon: "mdi-shield-crown",
+        //   title: "le Groupo-chat",
+        //   to: "/adminpage",
+        // },
       ],
 
       // icon: "../logo/logo.png",
-      title: "Groupomania le réseau",
+      title: "Soc-Net",
     };
   },
 
-
   async mounted() {
-    // setTimeout(() => {
-    //   this.showloader = false
-    // },3000);
-
-   await axios.get(`http://localhost:5000/jwtid`)
+    await axios
+      .get(`http://localhost:5000/jwtid`)
       .then((res) => {
-        console.log(res.status);
-        if(res.status === 204){
-          console.log("1"+this.show);
+        if (res.data == "notoken") {
           console.log(res);
-          this.showloader = false
-          this.show = true
-      
-        }else{
-        this.userjwtid = res.data
-        console.log(typeof res.status);
-        console.log("test1"+res);
-        console.log("2"+this.show);
-            setTimeout(() => {
-      this.showloader = false
-    },1500);
+          this.showloader = true;
+          this.show = true;
+        } else {
+          this.userjwtid = res.data;
+          setTimeout(() => {
+            this.showloader = false;
+          }, 1500);
 
-        // TODO => Insert loader \\ 
-        // }).catch((error)=>{
-        //   console.log(error);
-      }
+          axios
+            .get(`http://localhost:5000/api/user/${this.userjwtid}`)
+            .then((data) => {
+              this.firstname = data.data.firstname;
+              this.urlpic = data.data.photo;
+              this.id = data.data.id;
+              this.role = data.data.role;
+              this.getcolor();
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
       })
-
-
-
-
-     await axios.get(`http://localhost:5000/api/user/${this.userjwtid}`)
-      .then((data) => {
-        this.name = data.data.firstname
-        this.urlpic = data.data.photo
-
-
-      }).catch((error) => {
-        console.log(
-          error
-        )
-      })
-    this.getcolor()
-
-
-
+      .catch((err) => {
+        console.log(err);
+      });
   },
-
-}
-
-
-
-
-
+};
 </script>
 <style lang="scss">
 html {
@@ -304,7 +275,6 @@ html {
 //  margin-top: 55px;
 // }
 
-
 // .drawer-left{
 //   margin-top: 55px;
 // }
@@ -314,7 +284,6 @@ html {
 .v-toolbar__content {
   background-color: $primary;
 }
-
 
 .avatar {
   display: flex;
@@ -339,6 +308,7 @@ html {
   font-size: 1.7rem;
   padding-left: 1%;
   padding-bottom: 2%;
+  color: bisque;
   background-color: rgb(89, 165, 35);
 }
 
@@ -357,7 +327,7 @@ html {
   width: auto;
   border: solid $secondary;
   color: $secondary;
-  border-radius: 30%;
+  border-radius: 15px;
 
   &:hover {
     background-color: $secondary;
@@ -383,8 +353,81 @@ html {
   }
 }
 
+a#btn-post-router {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin-left: 1%;
+  background-color: $tertiary;
+  width: 50px;
+  height: 45px;
+  border: solid $secondary;
+  color: $secondary;
+  border-radius: 30%;
 
+  &:hover {
+    background-color: $secondary;
+    border: solid $tertiary;
+    color: $tertiary;
+    border-radius: 20%;
 
+    &#btn-post-router > i {
+      color: $tertiary;
+    }
+  }
+}
+
+a#btn-post-router.nuxt-link-exact-active {
+  background-color: $secondary;
+  border: solid $tertiary;
+  color: $tertiary;
+  border-radius: 30%;
+
+  &#btn-post-router > i {
+    color: $tertiary;
+  }
+
+  &:hover {
+    border-radius: 20%;
+  }
+}
+
+a.btn-post-router-plus.nuxt-link-exact-active {
+  background-color: $secondary;
+  border: solid $tertiary;
+  color: $tertiary;
+  border-radius: 30%;
+
+  &.btn-post-router-plus > i {
+    color: $tertiary;
+  }
+}
+
+a.btn-post-router-plus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin-left: 1%;
+  background-color: $tertiary;
+  height: 45px;
+  width: 50px;
+  border: solid $secondary;
+  color: $secondary;
+  border-radius: 30%;
+
+  &:hover {
+    background-color: $secondary;
+    border: solid $tertiary;
+    color: $tertiary;
+    border-radius: 20%;
+
+    &.btn-post-router-plus > i {
+      color: $tertiary;
+    }
+  }
+}
 
 // #btn-post-nav {
 //   background-color: $tertiary;
@@ -402,79 +445,43 @@ html {
 //   }
 // }
 
+// #btn-post-nav-select {
+//   background-color: $secondary;
+//   border: solid $tertiary;
+//   color: $tertiary;
+//   border-radius: 20%;
+//   height: 35px;
+//   width: auto;
 
-a#btn-post-router {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  margin-left: 1%;
-  background-color: $tertiary;
-  width: 50px;
-  height: 35px;
-  border: solid $secondary;
-  color: $secondary;
-  border-radius: 30%;
-  &:hover {
-    background-color: $secondary;
-    border: solid $tertiary;
-    color: $tertiary;
-    border-radius: 20%;
-    &#btn-post-router>i{
-    color:$tertiary;
-    }
-  }
-}
+//   &:hover {
+//     background-color: $tertiary;
+//     border: solid $secondary;
+//     color: $secondary;
+//     border-radius: 30%;
+//   }
+// }
 
-a#btn-post-router.nuxt-link-exact-active {
-    background-color: $secondary;
-    border: solid $tertiary;
-    color: $tertiary;
-    border-radius: 30%;
-    &#btn-post-router>i{
-    color:$tertiary;
-    }
-    &:hover{
-      border-radius: 20%;
-    }
-  }
+// #btn-post-router {
+//   text-decoration: none;
+//   color: $secondary;
+//   font-weight: bold;
+//   margin-left: 0.5%;
+//   margin-right: 0.5%;
+//   // &:active{
+//   //   background-color: red;
+//   // }
+// }
 
-a.btn-post-router-plus.nuxt-link-exact-active {
-    background-color: $secondary;
-    border: solid $tertiary;
-    color: $tertiary;
-    border-radius: 30%;
-    &.btn-post-router-plus>i{
-    color:$tertiary;
-    }
-  }
-
-a.btn-post-router-plus {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  margin-left: 1%;
-  background-color: $tertiary;
-  height: 35px;
-  width: 50px;
-  border: solid $secondary ;
-  color: $secondary;
-  border-radius: 30%;
-  &:hover {
-    background-color: $secondary;
-    border: solid $tertiary;
-    color: $tertiary;
-    border-radius: 20%;
-    &.btn-post-router-plus>i{
-    color:$tertiary;
-    }
-  }
-}
-
-
+// #btn-post-router-plus {
+//   text-decoration: none;
+//   color: $secondary;
+//   font-weight: bold;
+//   margin-right: 0.5%;
+//   // &:active{
+//   //   background-color: red;
+//   // }
+// }
 #temp-title {
-  margin-right: 10%;
   font-family: Lato, sans-serif;
   font-size: 35px;
   letter-spacing: 2px;
@@ -482,10 +489,12 @@ a.btn-post-router-plus {
 
   @keyframes textAnimated {
     0% {
-      background: linear-gradient(70deg,
-          darken($primary, 10%),
-          $tertiary,
-          $secondary );
+      background: linear-gradient(
+        70deg,
+        darken($primary, 10%),
+        $tertiary,
+        $secondary
+      );
       background-position: -16em 0;
       background-clip: text;
       -webkit-background-clip: text;
@@ -493,10 +502,12 @@ a.btn-post-router-plus {
     }
 
     50% {
-      background: linear-gradient(85deg,
-          darken($primary, 10%),
-          $tertiary,
-          $secondary );
+      background: linear-gradient(
+        85deg,
+        darken($primary, 10%),
+        $tertiary,
+        $secondary
+      );
       background-position: 0 0;
       background-clip: text;
       -webkit-background-clip: text;
@@ -504,16 +515,40 @@ a.btn-post-router-plus {
     }
 
     100% {
-      background: linear-gradient(70deg,
-          darken($primary, 10%),
-          $tertiary,
-          $secondary );
+      background: linear-gradient(
+        70deg,
+        darken($primary, 10%),
+        $tertiary,
+        $secondary
+      );
       background-position: -15em;
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
     }
   }
+}
+@media (max-width: 500px) {
+  #temp-title {
+    display: none;
+  }
+  a#router-main {
+  display: flex;
+   width: 50px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+}
+
+#router-main {
+  display: flex;
+  width: 300px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .logo-white {
@@ -564,20 +599,4 @@ a.btn-post-router-plus {
 .v-list-item__action {
   color: $secondary;
 }
-
-// #btn-post-nav-select {
-//   background-color: $secondary;
-//   border: solid $tertiary;
-//   color: $tertiary;
-//   border-radius: 20%;
-//   height: 35px;
-//   width: auto;
-
-//   &:hover {
-//     background-color: $tertiary;
-//     border: solid $secondary;
-//     color: $secondary;
-//     border-radius: 30%;
-//   }
-// }
 </style>

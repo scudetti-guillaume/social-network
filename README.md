@@ -1,69 +1,37 @@
-# test
+  ## Installation : 
 
-## Build Setup
+    Installation de node JS :
 
-```bash
-# install dependencies
-$ npm install
+    Rendez vous sur le site de nodeJs (https://nodejs.org) et téléchargez la dernière version stable
+    Pour vérifier que nodeJS est bien installé, tapez la commande suivante dans un terminal : node -v
+    Vérifiez que la version retournée est bien supérieure ou égale a la version v16.16.0
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+    Installation des packages : 
+    
+    => se rendre à la racine du projet à l'aide d'un terminal de commande.
+    => exécuter ```npm install```.
+    => Completer le fichier ```.env.exemple``` avec les variables d'environnement et renomer le en ```.env``` .
+   
+  ## Démarrage du projet :
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+    ### Démarrage du Frontend : 
 
-# generate static project
-$ npm run generate
-```
+      => se rendre à la racine du projet à l'aide d'un terminal de commande et exécuter ```npm run dev```.
+     
+    ### Démarrage du Backend : 
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
-
-## Special Directories
-
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
-
-### `assets`
-
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
-
-### `components`
-
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+       => se rendre dans le dossier ```backend``` à l'aide d'un terminal de commande et exécuter ```nodemon```.
+       
+    ### Ouverture du projet dans le navigateur :
+    
+      => se rendre à l'adresse http://localhost:3000/ 
+     
+     
+   ## Précision :
+        ### Dans le dossier mongoDBdump vous trouverez la base données ainsi que les employées déjà crée.
+        ### Une collection employees Mondodb à été crée avec les employé(e)s simulé car pour se pourvoir creer un compte il faut etre enregistrer dans la collection employees.
+        ci dessous vous trouverez la liste des employées, vous pouvez bien sur en ajouter ou retirer.
+        vous trouverez les données necessaire pour l'enregistrement et la connection des utilisateurs et la connection de l'administrateur.
+        ### Un administrateur peut etre ajouter, pour cela definisez dans la collection ```users```  la clé valeur => role : 'admin' à l'utilisateur souhaité.
+        ### Pour supprimer cette option de controle des usagers rendez-vous :
+        dans le dossier: backend/controllers puis dans le fichier : auth.controllers ligne 30 ,et suivez les instructions.

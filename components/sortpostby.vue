@@ -4,7 +4,7 @@
 
             <v-card class="popup-sort-post ">
                 <p class="logo-disconnect-delete"><img class="logo-white" src="../logo/logo.png" />
-                    <span id="span-delete-modale">La team GROUPOMANIA </span>
+                    <span id="span-delete-modale">GROUPOMANIA </span>
                 </p>
                 <p id="span-del-bio">Trier les publications par : </p>
                 <div class="btn-sortby">
@@ -13,14 +13,13 @@
                 <li ><button class="friend-btn" @click="$emit('close-modale-sort-follower')" >Mes Abonné(e)s</button></li>
                 <li ><button class="postlike-btn" @click="$emit('close-modale-sort-like')" >Mes Likes</button></li>
                 <li ><button class="postall-btn" @click="$emit('close-modale-sort-all')" >Toutes les publications</button></li>
+                <li v-if="admin"><button class="postadmin-btn" @click="$emit('close-modale-sort-signal')" >Signalement</button></li>
 
                </div>
-                <!-- <p>cette action est irreversible </p> -->
-                <!-- <v-btn id="btn-notdelete-comfirm" @click="$emit('close-modale-sort')"><span>Valider</span></v-btn> -->
                 <p class="comfirm-span-delete"></p>
                 <v-btn @click="$emit('close-modale-sort')" id="btn-delete-comfirm"><span>Retour</span>
                 </v-btn>
-                <!-- <v-btn v-else id="btn-delete-comfirm"  ><span>c'est fait <v-icon class="delete-icon-main" size="20px">mdi-delete-circle</v-icon ></span></v-btn> -->
+              
 
             </v-card>
         </v-col>
@@ -29,18 +28,49 @@
     
     
 <script>
-
+import axios from "axios";
 export default {
+   
     // name: 'Delete',
-
     data() {
         return {
-     
+            userjwtid: '',
+            role:'',
+            userid:'',
+            admin: false
+          
+
         }
     },
-    methods: {
-   
-    }
+   async mounted() {
+           axios.defaults.withCredentials = true;
+           await axios
+             .get(`http://localhost:5000/jwtid`)
+             .then((res) => {
+               this.userjwtid = res.data;
+           
+               // TODO => Insert loader \\
+             })
+             .catch((error) => {
+               console.log(error);
+             });
+        
+           await axios
+             .get(`http://localhost:5000/api/user/${this.userjwtid}`)
+             .then((docs) => {
+               this.role = docs.data.role;
+               this.userid = docs.data._id;
+                  if (docs.data.role != undefined) {
+                    setTimeout(() => {
+                        this.admin = true
+                    }, 0.5);
+                }
+             })
+             .catch((error) => {
+               console.log(error);
+             });
+         },
+  
 }
 
 
@@ -83,6 +113,11 @@ export default {
     color:$tertiary;
     border-radius: 10%;
 }
+.postadmin-btn:hover{
+    background-color: $secondary;
+    color:$tertiary;
+    border-radius: 10%;
+}
 
 .popup-sort-post {
     padding-bottom: 1%;
@@ -94,7 +129,8 @@ export default {
     width: 320px;
     // max-height: 200px;
     // min-height: 200px;
-    height: 278px;
+    display: flex;
+    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -123,6 +159,8 @@ export default {
 }
 
 #span-delete-modale{
+    display: flex;
+    margin-top: 1%;
 font-style: italic;
 color: $primary;
 
