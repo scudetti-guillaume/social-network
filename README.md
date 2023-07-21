@@ -1,3 +1,21 @@
+ ## Présentation du projet :
+     SocialNetwork est un réseau social interne pour une entreprise seul les employé(e)s enregistré dans la base de données peuvent se connecter sur le réseau.
+     pour vous connecter en tant qu'administateur : 
+       mail : admin.admin@socialnetwork.fr,
+       badge : 1001023,
+       nom : admin,
+       prénom : admin,
+
+     pour vous connecter en tant qu'utilisateur test : 
+       mail : test.test@socialnetwork.fr,
+       badge : 00,
+       nom : test,
+       prénom : test,
+
+     Pour vous connecter ou vous enregistrer en tant qu'utilisateur vous pouvez retrouvez dans le fichier mongoDBdump la liste des utilisteurs inscrit sur la base de donnée.
+     si il y à une erreur il est possible que l'utisateur soit déjà utilisé par quelqu'un, veuillez en essayer un autre.
+     
+  
   ## Installation : 
 
     Installation de node JS :
