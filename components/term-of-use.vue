@@ -1,7 +1,7 @@
 <template>
   <div class="overlay">
     <div class="instruction-term" >
-      <h2 class="title-term">Bienvenue sur le reseau social de groupomania</h2>
+      <h2 class="title-term">Bienvenue sur le reseau social de Soc-Net</h2>
 
       <p>
         Malgré le fait que ce réseau soit un endroit de détente, n'oubliez pas
@@ -38,7 +38,7 @@
         adressez à vos collègues de travail.
       </p>
       <p>Team work make dream work,</p>
-      <p>La modération du réseau et La direction Groupomania.</p>
+      <p>La modération du réseau et La direction socnet.</p>
 
       <button class="btn-term" @click="$emit('close-modal-use')">
         Retour à l'inscription
