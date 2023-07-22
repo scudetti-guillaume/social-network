@@ -133,6 +133,7 @@
                   <span>{{ formfull }}</span>
                 </div>
                 <div class="errormsg">{{ infomsg }}</div>
+                <div class="errormsg">{{ infoerror }}</div>
                 <div class="successmsg">{{ successreg }}</div>
 
                 <v-spacer />
@@ -184,6 +185,7 @@ export default {
       termofuse: false,
       successreg: "",
       infomsg: "",
+      infoerror:"",
       formfull: "",
       firstname: "",
       lastname: "",
@@ -281,6 +283,7 @@ export default {
            this.badge="",
           this.email="",
          this.psw="",
+         this.infoerror = error.response.data.email
           this.infomsg = error.response.data.error;
             setTimeout(() => {
             this.infomsg = "";

@@ -48,14 +48,11 @@ exports.signUp = async (req, res, next) => {
         badge: badge,
         password: password,
       });
-      console.log(userNew);
-
       await userNew.save();
-
-      return res.status(201).json(userNew);
-    } catch (err) {
-
-      const errors = signUpErrors(err);
+      res.status(201).json(userNew);
+    } catch (error) {
+      const errors = signInErrors(err);
+      res.status(401).send({ errors });
     }
   }
 };
