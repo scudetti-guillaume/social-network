@@ -5,7 +5,7 @@ const SignalModel = require("../models/signal.model");
 const CommentModel = require("../models/comment.model");
 const ObjectID = require("mongoose").Types.ObjectId;
 const fs = require("fs");
-const { log } = require("console");
+
 
 
 // read post end point \\

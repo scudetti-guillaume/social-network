@@ -51,7 +51,7 @@ exports.signUp = async (req, res, next) => {
       await userNew.save();
       res.status(201).json(userNew);
     } catch (error) {
-      const errors = signInErrors(err);
+      const errors = signUpErrors(err);
       res.status(401).send({ errors });
     }
   }

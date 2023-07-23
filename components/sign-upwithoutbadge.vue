@@ -74,6 +74,7 @@
                 </div>
                 <div class="errormsg">{{ infomsg }}</div>
                 <div class="successmsg">{{ successreg }}</div>
+                 <div class="errormsg">{{ infoerror }}</div>
 
                 <v-spacer />
                 <button @click="loginInfo" :disabled="validatedForm" type="submit" class="btn-valid">
@@ -116,6 +117,7 @@ export default {
       termofuse: false,
       successreg: "",
       infomsg: "",
+      infoerror:"",
       formfull: "",
       firstname: "",
       lastname: "",
@@ -213,6 +215,7 @@ export default {
             this.email = "",
             this.psw = "",
             this.infomsg = error.response.data.error;
+            this.infoerror = error.response.data.email;
           setTimeout(() => {
             this.infomsg = "";
           }, 3000);
