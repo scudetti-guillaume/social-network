@@ -386,9 +386,11 @@ export default {
     setTimeout(() => {
       this.showloader = false
     }, 1500);
-    axios.defaults.withCredentials = true;
+    this.$axios.defaults.withCredentials = true;
     let params = window.location.toString()
+    console.log(params);
     let idUserURL = params.split('=')[1]
+    console.log(idUserURL);
     this.id = idUserURL
     await this.$axios.get(`/jwtid`)
       // await axios.get(`http://localhost:5000/jwtid`)
@@ -407,7 +409,7 @@ export default {
           this.userlastname = docs.data.lastname
       }).catch((error) => { console.log(error) });
 
-    await this.$axios.get(`http://localhost:5000/api/user/${this.id}`)
+    await this.$axios.get(`/api/user/${this.id}`)
       // await axios.get(`http://localhost:5000/api/user/${this.id}`)
       .then((docs) => {
         this.signaluser = docs.data.profilSignalBy
