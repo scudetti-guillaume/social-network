@@ -269,7 +269,7 @@ export default {
             window.location.href = "./";
           }, 2000);
           setTimeout(() => {
-            this.firstname=""
+          this.firstname=""
           this.lastname="",
           this.badge="",
           this.email="",
@@ -301,9 +301,7 @@ export default {
          this.pswcom = ""
          this.password= ""
   },
-
   },
-
 };
 
 </script>
@@ -313,7 +311,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: auto;
+  width: 100%;
   height: auto;
   top: 0px;
   bottom: 0;
@@ -326,6 +324,14 @@ export default {
   transition: opacity 0.4s;
   z-index: 100;
 }
+
+  .overlaybis{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: auto;
+    
+  }
 
 .main{
   margin-top: 5%;
@@ -344,11 +350,11 @@ export default {
   padding-right: 3px;
 }
 
-div.overlaybis-signup {
-  height: auto;
-  padding-left: 10%;
-  padding-right: 10%;
-}
+// div.overlaybis-signup {
+//   height: auto;
+//   padding-left: 10%;
+//   padding-right: 10%;
+// }
 
 .cont-card {
   display: flex;

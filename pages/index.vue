@@ -370,11 +370,10 @@
                   <span id="number-like">{{ post.likers.length }}</span>
                 </div>
               </button>
-              <button id="btn-att-comment">
+              <button id="btn-att-comment" @click="PostCommentControle(post._id, index), saveOpen(index)">
                 <v-icon class="img-att"> mdi-message-outline</v-icon>
                 <p
                   class="text-att-comment"
-                  @click="PostCommentControle(post._id, index), saveOpen(index)"
                   title="commenter la publication"
                   :index="index"
                   :postid="post._id"
@@ -806,7 +805,6 @@ export default {
   methods: {
     getPictureComment(){
       this.$axios.get('/api/user/')
-    // axios.get('http://localhost:5000/api/user/')
     .then((res)=>{
     let data = res.data
     data.forEach(pic => {
@@ -935,7 +933,6 @@ export default {
           comment: this.CommentMessage,
         };
            this.$axios.patch(`/api/post/comment-post/${postid}`, data)
-        // axios.patch(`http://localhost:5000/api/post/comment-post/${postid}`, data)
           .then(() => {
             this.CommentMessage = "";
             document.querySelectorAll(".deploy-commentUser-card")[
@@ -987,12 +984,10 @@ export default {
 
     getPostFollower() {
      this.$axios.get(`/api/post/postfollowing/${this.userid}`)
-      // axios.get(`http://localhost:5000/api/post/postfollowing/${this.userid}`)
         .then((docs) => {
           this.posts = docs.data;
           if (docs.data[0] === undefined) {
            this.$axios.get("/api/post")
-            // axios.get("http://localhost:5000/api/post")
             .then((docs) => {
               this.posts = docs.data;
             });
@@ -1017,12 +1012,10 @@ export default {
 
     getPostFollowing() {
           this.$axios.get(`/api/post/postfollower/${this.userid}`)
-      // axios.get(`http://localhost:5000/api/post/postfollower/${this.userid}`)
         .then((docs) => {
           this.posts = docs.data;
           if (docs.data[0] === undefined) {
              this.$axios.get("/api/post")
-            // axios.get("http://localhost:5000/api/post")
             .then((docs) => {
               this.posts = docs.data;
             });
@@ -1047,14 +1040,12 @@ export default {
 
     getPostsSignal() {
        this.$axios.get(`/api/post/postsignaladmin/${this.userid}`)
-      // axios.get(`http://localhost:5000/api/post/postsignaladmin/${this.userid}`)
         .then((docs) => {
           console.log(docs);
           this.posts = docs.data;
           console.log(this.posts);
           if (docs.data[0] === undefined) {
              this.$axios.get("/api/post")
-            // axios.get("http://localhost:5000/api/post")
             .then((docs) => {
               this.posts = docs.data;
             });
@@ -1079,12 +1070,10 @@ export default {
 
     getPostIlike() {
     this.$axios.get(`/api/post/postlike/${this.userid}`)
-      // axios.get(`http://localhost:5000/api/post/postlike/${this.userid}`)
         .then((doc) => {
           this.posts = doc.data;
           if (doc.data[0] === undefined) {
            this.$axios.get("/api/post")
-            // axios.get("http://localhost:5000/api/post")
             .then((docs) => {
               this.posts = docs.data;
             });
@@ -1109,12 +1098,10 @@ export default {
 
     getPostOwn() {
      this.$axios.get(`/api/post/postby/${this.userid}`)
-      // axios.get(`http://localhost:5000/api/post/postby/${this.userid}`)
         .then((doc) => {
           this.posts = doc.data;
           if (doc.data[0] === undefined) {
           this.$axios.get("/api/post")
-            // axios.get("http://localhost:5000/api/post")
             .then((docs) => {
               this.posts = docs.data;
             });
@@ -1140,7 +1127,6 @@ export default {
     getPosts() {
       localStorage.removeItem("sort");
             this.$axios.get("/api/post")
-      // axios.get("http://localhost:5000/api/post")
         .then((docs) => {
           this.posts = docs.data;
         })
@@ -1150,7 +1136,6 @@ export default {
     },
     getPostsRefresh() {
       this.$axios.get("/api/post")
-      // axios.get("http://localhost:5000/api/post")
         .then((docs) => {
           this.posts = docs.data;
         })
@@ -1185,12 +1170,8 @@ export default {
       this.$axios.patch(`/api/post/like-post/${postId}`, {
           id: this.userid,
         })
-        // axios.patch(`http://localhost:5000/api/post/like-post/${postId}`, {
-        //     id: this.userid,
-        //   })
           .then(() => {
            this.$axios.get(`/api/user/${this.userjwtid}`)
-            // axios.get(`http://localhost:5000/api/user/${this.userjwtid}`)
               .then((user) => {
                 this.userLikePostId = user.data.likes;
               })
@@ -1210,12 +1191,8 @@ export default {
         this.$axios.patch(`/api/post/unlike-post/${postId}`, {
           id: this.userid,
         })
-        // axios.patch(`http://localhost:5000/api/post/unlike-post/${postId}`, {
-        //     id: this.userid,
-        //   })
           .then(() => {
           this.$axios.get(`/api/user/${this.userjwtid}`)
-            // axios.get(`http://localhost:5000/api/user/${this.userjwtid}`)
               .then((user) => {
                 this.userLikePostId = user.data.likes;
               })
@@ -1254,14 +1231,12 @@ export default {
 
     getUsers() {
     this.$axios.get("/api/user")
-      // axios.get("http://localhost:5000/api/user")
         .then((docs) => {})
         .catch((err) => console.log(err));
     },
 
     async deletePost(postId) {
     await this.$axios.delete(`/api/post/${postId}`)
-      // await axios.delete(`http://localhost:5000/api/post/${postId}`)
         .then((post) => {})
         .catch((err) => console.log(err));
     },
@@ -1276,12 +1251,8 @@ export default {
      this.$axios.patch(`/api/user/follow/${this.userid}`, {
         idToFollow: posterId,
       })
-      // axios.patch(`http://localhost:5000/api/user/follow/${this.userid}`, {
-      //     idToFollow: posterId,
-      //   })
         .then(() => {
         this.$axios.get(`/api/user/${this.userjwtid}`)
-          // axios.get(`http://localhost:5000/api/user/${this.userjwtid}`)
             .then((docs) => {
               this.userFollowingId = docs.data.following;
             });
@@ -1296,12 +1267,8 @@ export default {
     this.$axios.patch(`/api/user/unfollow/${this.userid}`, {
         idToUnFollow: posterId,
       })
-      // axios.patch(`http://localhost:5000/api/user/unfollow/${this.userid}`, {
-      //     idToUnFollow: posterId,
-      //   })
         .then(() => {
              this.$axios.get(`/api/user/${this.userjwtid}`)
-          // axios.get(`http://localhost:5000/api/user/${this.userjwtid}`)
             .then((docs) => {
               this.userFollowingId = docs.data.following;
             });
@@ -1313,7 +1280,7 @@ export default {
     },
   },
 
-  async mounted() {
+   async mounted() {
     this.$axios.defaults.withCredentials = true;
     window.addEventListener("scroll", this.handleScroll);
     setTimeout(() => {
@@ -1322,7 +1289,6 @@ export default {
     this.userFollowerId = [];
     this.userFollowingId = [];
     await this.$axios.get(`/jwtid`)
-    // await axios.get(`http://localhost:5000/jwtid`)
       .then((res) => {
         this.userjwtid = res.data;
         this.show = true;
@@ -1332,7 +1298,6 @@ export default {
         console.log(error);
       });
     await this.$axios.get(`/api/user/${this.userjwtid}`)
-    // await axios.get(`http://localhost:5000/api/user/${this.userjwtid}`)
       .then((docs) => {
         console.log(docs);
         this.role = docs.data.role;
@@ -1355,6 +1320,12 @@ export default {
   },
 };
 </script>
+
+
+
+
+
+
 
 <style lang="scss">
 #pagetopscroll {
@@ -2384,13 +2355,7 @@ p.btn-book-main-post {
   cursor: pointer;
   padding: 2%;
   &:hover {
-    background-color: $tertiary;
-    color: $secondary;
     translate: 3px;
-    border: solid 1px $secondary;
-    &.btn-att-follow > .img-att:before {
-      color: $secondary;
-    }
   }
 }
 
@@ -2409,14 +2374,7 @@ p.btn-book-main-post {
   padding: 2%;
 
   &:hover {
-    background-color: $tertiary;
-    color: $secondary;
     translate: 3px;
-    border: solid 1px $secondary;
-
-    &.btn-main-follow > .img-att:before {
-      color: $secondary;
-    }
   }
 }
 
@@ -2437,15 +2395,8 @@ p.btn-book-main-post {
   &.btn-att-unfollow > .img-att:before {
     color: $secondary;
   }
-
   &:hover {
-    background-color: $tertiary;
-    color: $secondary;
     translate: 3px;
-    border: solid 1px $secondary;
-    &.btn-att-unfollow > .img-att:before {
-      color: $secondary;
-    }
   }
 }
 
@@ -2465,15 +2416,8 @@ p.btn-book-main-post {
   &.btn-main-unfollow > .img-att:before {
     color: $secondary;
   }
-
   &:hover {
-    background-color: $tertiary;
-    color: $secondary;
     translate: 3px;
-    border: solid 1px $secondary;
-    &.btn-main-unfollow > .img-att:before {
-      color: $secondary;
-    }
   }
 }
 

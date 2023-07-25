@@ -131,11 +131,6 @@ export default {
           password: this.psw,
           badge: this.badge,
         })
-      // await axios.post("http://localhost:5000/api/user/loginadmin", {
-      //     email: this.email,
-      //     password: this.psw,
-      //     badge: this.badge,
-      //   })
         .then((user) => {
           const userId = user.data.user;
           this.successreg = "Connexion reussit, Bienvenue";
@@ -191,7 +186,7 @@ export default {
     // await axios.get(`http://localhost:5000/jwtidadmin`)
       .then((res) => {
         if (res.status === 201) {
-          loggedIn = false
+          this.loggedIn = false
         } else {
           this.userjwtid = res.data;
           this.loggedIn = true;

@@ -190,24 +190,20 @@ export default {
           password: this.psw,
         })
 
-      // await axios
-      //   .post("http://localhost:5000/api/user/register", {
-      //     firstname: this.firstname,
-      //     lastname: this.lastname,
-      //     email: this.email,
-      //     password: this.psw,
-      //   })
         .then(() => {
 
           this.successreg = "Compte creer avec succée, Bienvenue";
           window.prompt("entrer la clé reçu par mail ( n'importe quel touche)")
           setTimeout(() => {
+            window.location.href = "./";
+          }, 2000);
+          setTimeout(() => {
             this.firstname = ""
             this.lastname = "",
+              this.badge = "",
               this.email = "",
-              this.psw = "",
-              window.location.href = "./";
-          }, 2000);
+              this.psw = "";
+          }, 2500)
         })
         .catch((error) => {
           this.firstname = ""
