@@ -5,17 +5,35 @@
        badge : 1001023,
        nom : admin,
        prénom : admin,
+       mot de passe : aA@12345
 
      pour vous connecter en tant qu'utilisateur test : 
        mail : test.test@socialnetwork.fr,
        badge : 00,
        nom : test,
        prénom : test,
+       mot de passe : aA@12345
 
      Pour vous connecter ou vous enregistrer en tant qu'utilisateur vous pouvez retrouvez dans le fichier mongoDBdump la liste des utilisteurs inscrit sur la base de donnée.
      si il y à une erreur il est possible que l'utisateur soit déjà utilisé par quelqu'un, veuillez en essayer un autre.
      
-  
+
+## features : 
+    - like / dislike
+    - systéme d'abonnement
+    - personalisation du profil 
+    - système de viste de profil personnalisé
+    - système de commentaires
+    - système de signalement par post et par utilisateur
+    - système de tri des posts par préférences 
+    - suppression de profil 
+    - panel admin : 
+       - suppression de post 
+       - suppression de commentaire
+       - suppression de photo
+       - suppression de profil 
+       - ban de profil et déban 
+
   ## Installation : 
 
     Installation de node JS :
