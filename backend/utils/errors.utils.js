@@ -2,24 +2,24 @@
 
 exports.signUpErrors = (err) => {
   let errors = { lastname: "", firstname: "", badge: "",email: "", password: "", };
-  if (err.message.includes("lastname")) errors.lastname = "veuillez vérifié vos données ,si le probleme persiste contactez un administrateur groupomania ";
+  if (err.message.includes("lastname")) errors.lastname = "veuillez vérifié vos données ,si le probleme persiste contactez un administrateur socialNetwork ";
 
   if (err.message.includes("firstname"))
-  errors.firstname= "veuillez vérifié vos données ,si le probleme persiste contactez un administrateur groupomania ";
+    errors.firstname = "veuillez vérifié vos données ,si le probleme persiste contactez un administrateur socialNetwork ";
 
-  if (err.message.includes("email")) errors.email = "veuillez vérifié vos données ,si le probleme persiste contactez un administrateur groupomania ";
+  if (err.message.includes("email")) errors.email = "veuillez vérifié vos données ,si le probleme persiste contactez un administrateur socialNetwork ";
 
   if (err.message.includes("badge")) errors.badge =
-  "veuillez vérifié vos données ,si le probleme persiste contactez un administrateur groupomania ";
+  "veuillez vérifié vos données ,si le probleme persiste contactez un administrateur socialNetwork ";
 
   if (err.message.includes("password"))
     errors.password = "Le mot de passe doit faire 6 caractéres au minimum";
 
   if (err.code === 11000 && Object.keys(err.keyValue)[0].includes("bagde"))
-    errors.badge = "veuillez vérifié vos données ,si le probleme persiste contactez un administrateur groupomania ";
+    errors.badge = "veuillez vérifié vos données ,si le probleme persiste contactez un administrateur socialNetwork ";
 
   if (err.code === 11000 && Object.keys(err.keyValue)[0].includes("email"))
-    errors.email = "veuillez vérifié vos données ,si le probleme persiste contactez un administrateur groupomania ";
+    errors.email = "veuillez vérifié vos données ,si le probleme persiste contactez un administrateur socialNetwork ";
 
   return errors;
 };

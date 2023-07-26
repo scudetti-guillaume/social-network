@@ -25,8 +25,8 @@ router.put("/:id",requireAuth,(req, res, next) => {image(req, res, function (err
 router.patch("/banuser/:id",requireAuth,userController.banuser)
 router.patch("/unbanuser/:id",requireAuth,userController.unbanuser)
 router.patch("/signalUser/:id",requireAuth,userController.signalUser)
-// router.patch("/deleteuserpicture/:id",requireAuth,userController.delPicUser)
-// router.delete("/:id", userController.userDelete);
+router.post("/deleteuseradmin/:id", requireAuth, userController.DeleteUserAdmin)
+router.post("/deletepostbanadmin/:id", requireAuth, userController.DeletePostBan)
 router.patch("/follow/:id",requireAuth, userController.follow);
 router.patch("/unfollow/:id",requireAuth, userController.unfollow);
 

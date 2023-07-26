@@ -43,7 +43,7 @@
                 />
                 <v-spacer />
                 <label for="email">
-                  <h2 class="titleh2">Votre mail Groupomania</h2>
+                  <h2 class="titleh2">Votre mail SocialNetwork</h2>
                 </label>
                 <v-spacer />
                 <input
@@ -51,7 +51,7 @@
                   v-model="email"
                   class="form-input"
                   type="text"
-                  placeholder="nom.prenom@groupomania.fr"
+                  placeholder="nom.prenom@socialnetwork.fr"
                   name="email"
                   required
                 />
@@ -72,7 +72,7 @@
                 <v-spacer />
                 <label for="pass">
                   <h2 class="titleh2">
-                    Mot de passe Groupomania
+                    Mot de passe SocialNetwork
                   </h2>
                 </label>
 
@@ -133,6 +133,7 @@
                   <span>{{ formfull }}</span>
                 </div>
                 <div class="errormsg">{{ infomsg }}</div>
+                <div class="errormsg">{{ infoerror }}</div>
                 <div class="successmsg">{{ successreg }}</div>
 
                 <v-spacer />
@@ -184,6 +185,7 @@ export default {
       termofuse: false,
       successreg: "",
       infomsg: "",
+      infoerror:"",
       formfull: "",
       firstname: "",
       lastname: "",
@@ -199,7 +201,7 @@ export default {
   computed: {
        mailValidation(){
         // ====== si bug doublebackslash new regexp consum one bs =======\\
-      let mail =  new RegExp('[a-z]+\.[a-z]@groupomania.fr')
+      let mail =  new RegExp('[a-z]+\.[a-z]@socialnetwork.fr')
       let testMail = mail.test(this.email)
     if(testMail = true){
       this.mailValid = true
@@ -250,15 +252,15 @@ export default {
        this.infomsg = "il y a une erreur, Réessayer";
         return false
      }
-      
-      await axios
-        .post("http://localhost:5000/api/user/register", {
+       await this.$axios
+        .post("/api/user/register", {
           firstname: this.firstname,
           lastname: this.lastname,
           badge: this.badge,
           email: this.email,
           password: this.psw,
         })
+
         .then(() => {
          
           this.successreg = "Compte creer avec succée, Bienvenue";
@@ -267,7 +269,7 @@ export default {
             window.location.href = "./";
           }, 2000);
           setTimeout(() => {
-            this.firstname=""
+          this.firstname=""
           this.lastname="",
           this.badge="",
           this.email="",
@@ -281,6 +283,7 @@ export default {
            this.badge="",
           this.email="",
          this.psw="",
+         this.infoerror = error.response.data.email
           this.infomsg = error.response.data.error;
             setTimeout(() => {
             this.infomsg = "";
@@ -297,13 +300,10 @@ export default {
          this.termofuse= false
          this.pswcom = ""
          this.password= ""
-
   },
-
   },
-
 };
-// console.log(this.psw);
+
 </script>
 
 <style lang="scss">
@@ -311,7 +311,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: auto;
+  width: 100%;
   height: auto;
   top: 0px;
   bottom: 0;
@@ -324,6 +324,14 @@ export default {
   transition: opacity 0.4s;
   z-index: 100;
 }
+
+  .overlaybis{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: auto;
+    
+  }
 
 .main{
   margin-top: 5%;
@@ -342,13 +350,11 @@ export default {
   padding-right: 3px;
 }
 
-div.overlaybis-signup {
-  // height: 100%;
-  height: auto;
-  // width: 50%;
-  padding-left: 10%;
-  padding-right: 10%;
-}
+// div.overlaybis-signup {
+//   height: auto;
+//   padding-left: 10%;
+//   padding-right: 10%;
+// }
 
 .cont-card {
   display: flex;

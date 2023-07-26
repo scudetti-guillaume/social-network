@@ -18,7 +18,7 @@ exports.requireAuthAdmin = (req, res, next) => {
                 req.user = decodedToken.id;
                 next()
               } else {
-              res.cookie("jwt", "", { maxAge: durationTokenLogout }),
+                res.cookie("jwt_soc", "", { maxAge: durationTokenLogout }),
               res.cookie("jwtadmin", "", { maxAge: durationTokenLogout }),
               res.status(400).json("utilisateur banni");
                 }

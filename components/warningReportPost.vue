@@ -3,8 +3,8 @@
     <v-col v-if="!reportcheck.includes(userFromId )" class="d-flex justify-center align-center">
       <v-card class="popup-report-com">
         <p class="logo-disconnect-delete">
-          <img class="logo-white" src="../logo/logo.png" alt="logo" />
-          <span>La team GROUPOMANIA</span>
+          <img class="logo-white" src="../static/logo/logo.png" alt="logo" />
+          <span>La team SocNet</span>
         </p>
         <p v-if="!reportconfirm" id="span-report-post">
           <v-icon class="img-flag">mdi-flag</v-icon>
@@ -20,7 +20,7 @@
           cette publication vous offense signaler la
         </p>
         <div v-if="reportconfirm" id="span-report-post-signal">
-          <h4>La team GROUPOMANIA</h4>
+          <h4>La team SocNet</h4>
           <span id="span-report">
             vous remercie et va étudier le cas au plus vite,
           </span>
@@ -52,8 +52,8 @@
     <v-col v-else class="d-flex justify-center align-center">
       <v-card class="popup-report-com">
         <p class="logo-disconnect-delete">
-          <img class="logo-white" src="../logo/logo.png" alt="logo" />
-          <span>La team GROUPOMANIA</span>
+          <img class="logo-white" src="../static/logo/logo.png" alt="logo" />
+          <span>La team SocNet</span>
         </p>
         <p  id="span-report-post-titre">
           <v-icon class="img-flag">mdi-flag</v-icon>
@@ -64,7 +64,7 @@
           Vous avez déjà signalé cette publication
         </p>
         <div id="span-report-post-signal">
-          <h4>La team GROUPOMANIA</h4>
+          <h4>La team SocNet</h4>
           <span id="span-report">
           va étudier le cas au plus vite,
           </span>
@@ -100,8 +100,7 @@ export default {
     this.userSignalId = info.userSid
     this.userSignalFullname = info.userSfull
     this.postSignal = info.post
-   
-   axios.get(`http://localhost:5000/api/post/${this.postSignal}`)
+   this.$axios.get(`/api/post/${this.postSignal}`)
         .then((docs) => {
           localStorage.removeItem('info-signal-post')
           this.reportcheck = docs.data.signalBy
@@ -131,12 +130,11 @@ export default {
     userSignalFullname: this.userSignalFullname,
     postSignal :this.postSignal
       }
-      
-      axios.patch(`http://localhost:5000/api/post/postsignal/${this.postSignal}`,sendInfo)
+          this.$axios.patch(`/api/post/postsignal/${this.postSignal}`,sendInfo)
+      // axios.patch(`http://localhost:5000/api/post/postsignal/${this.postSignal}`,sendInfo)
       .then((doc)=>{
           console.log(doc);
           this.reportcheck = []
-
       })
       setTimeout(() => {
         this.$emit('close-modale-report-comfirm')

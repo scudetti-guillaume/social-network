@@ -48,14 +48,11 @@ exports.signUp = async (req, res, next) => {
         badge: badge,
         password: password,
       });
-      console.log(userNew);
-
       await userNew.save();
-
-      return res.status(201).json(userNew);
-    } catch (err) {
-
+      res.status(201).json(userNew);
+    } catch (error) {
       const errors = signUpErrors(err);
+      res.status(401).send({ errors });
     }
   }
 };
@@ -69,7 +66,7 @@ exports.signIn = async (req, res) => {
     const ban = UserModel.findById();
     const user = await UserModel.login(email, badge, password);
     const token = createToken(user._id);
-    res.cookie("jwt", token, {
+    res.cookie("jwt_soc", token, {
       // SameSite : None,
       session: false,
       maxAge: durationTokenLogin12,
@@ -78,7 +75,7 @@ exports.signIn = async (req, res) => {
     });
     UserModel.findOne({ _id: user, ban: true }, (err, doc) => {
       if (doc) {
-        res.cookie("jwt", "", { maxAge: durationTokenLogout }),
+        res.cookie("jwt_soc", "", { maxAge: durationTokenLogout }),
         res.status(400).json("utilisateur banni");
       } else {
         res.status(200).json({ user: user._id, token });
@@ -97,7 +94,7 @@ exports.logout = (req, res) => {
   // console.log(req.cookies)
   // console.log(res.cookie)
   
-  res.cookie("jwt", "", { maxAge: durationTokenLogout });
+  res.cookie("jwt_soc", "", { maxAge: durationTokenLogout });
   res.cookie("jwtadmin", "", { maxAge: durationTokenLogout });
   
   res.redirect("./");

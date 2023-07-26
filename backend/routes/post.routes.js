@@ -32,10 +32,9 @@ router.put('/photo/:id',requireAuth,(req, res, next) => {photo(req, res, functio
 } else {next();}});},postController.updatePictureUserPost )
 
 // gestion des commentaire\\
-
+router.get('/getcomment/:id', requireAuth, postController.getComment)
 router.patch('/comment-post/:id',requireAuth, postController.commentPost);
-// router.patch('/edit-comment-post/:id',requireAuth, postController.editCommentPost);
-// router.patch('/delete-comment-post/:id',requireAuth, postController.deleteCommentPost );
-
+router.patch('/postnewcomment/:id', requireAuth, postController.commentNewPost);
+router.delete('/deletecommentpost/:id', requireAuth, postController.deleteCommentPost)
 
 module.exports = router;
