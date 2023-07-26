@@ -106,7 +106,6 @@ export default {
     this.idpostban = info.postidban
         this.$axios.get(`/api/user/${this.iduserban}`)
       .then((doc) => {
-        console.log(doc);
         localStorage.removeItem('info-ban-user')
         this.firstname = doc.data.firstname
         this.lastname = doc.data.lastname
@@ -134,7 +133,6 @@ export default {
     banSend() {
       this.$axios.patch(`/api/user/banuser/${this.iduserban}`)
         .then((doc) => {
-          console.log('utilisateur banni');
         })
       setTimeout(() => {
         this.$emit('close-modale-ban-confirm')
@@ -143,8 +141,7 @@ export default {
     unbanSend() {
         this.$axios.patch(`/api/user/unbanuser/${this.iduserban}`)
         .then((doc) => {
-          this.unban = true
-          console.log('utilisateur débanni');
+          this.unban = true;
         })
       setTimeout(() => {
         this.$emit('close-modale-ban-confirm')

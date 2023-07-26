@@ -158,16 +158,12 @@ export default {
 
     getRefresh(){
      this.$axios.get(`/api/post/postsignaladmin/${this.userjwtid}`)
-    //  axios.get(`http://localhost:5000/api/post/postsignaladmin/${this.userjwtid}`)
         .then((res) => {
-          this.posts = res.data
-          console.log(res);
+          this.posts = res.data;
         });
       this.$axios.get(`/api/user/`)
-      // axios.get(`http://localhost:5000/api/user/`)
         .then((res) => {
-          this.users = res.data
-          console.log(res);
+          this.users = res.data;
         });
     },
     postIdDel(post) {
@@ -183,7 +179,6 @@ export default {
       this.showloader = false;
     }, 2500);
     await this.$axios.get(`/jwtidadmin`)
-    // await axios.get(`http://localhost:5000/jwtidadmin`)
       .then((res) => {
         if (res.status === 201) {
           this.loggedIn = false
@@ -191,12 +186,10 @@ export default {
           this.userjwtid = res.data;
           this.loggedIn = true;
           this.$axios.get(`/api/post/postsignaladmin/${this.userjwtid}`)
-          // axios.get(`http://localhost:5000/api/post/postsignaladmin/${this.userjwtid}`)
             .then((res) => {
               this.posts = res.data
             });
    this.$axios.get(`/api/user/`)
-          // axios.get(`http://localhost:5000/api/user/`)
             .then((res) => {
               this.users = res.data
             });

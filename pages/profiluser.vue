@@ -263,8 +263,6 @@ export default {
   methods: {
 
     getBio(){
-      //  axios
-      // .get(`http://localhost:5000/api/user/${this.userjwtid}`)
        this.$axios
         .get(`/api/user/${this.userjwtid}`)
       .then((docs) => {
@@ -279,14 +277,11 @@ export default {
       let formData = new FormData();
       formData.append("bio", this.bio);
            this.$axios.put(`/api/user/${this.userid}`, formData)
-      // axios.put(`http://localhost:5000/api/user/${this.userid}`, formData)
           .then(()=>{
             this.BioUser = ''
         }).then(()=>{
               this.$axios
       .get(`/api/user/${this.userjwtid}`)
-      //     axios
-      // .get(`http://localhost:5000/api/user/${this.userjwtid}`)
       .then((docs) => {
         this.bioUser = docs.data.bio
       })
@@ -316,15 +311,12 @@ export default {
           let formData = new FormData();
       formData.append("bio", this.newBioUser);
        this.$axios.put(`/api/user/${this.userid}`, formData)
-      // axios.put(`http://localhost:5000/api/user/${this.userid}`, formData)
           .then(()=>{
             this.newBioUser = ''
           this.modifbio = !this.modifbio
         }).then(()=>{
             this.$axios
               .get(`/api/user/${this.userjwtid}`)
-      //     axios
-      // .get(`http://localhost:5000/api/user/${this.userjwtid}`)
       .then((docs) => {
         this.bioUser = docs.data.bio
       })
@@ -344,7 +336,6 @@ export default {
     },
 
     deletebio() {
-      console.log(this.bio);
       this.newBioUser = this.bioUser;
     },
 
@@ -360,16 +351,11 @@ export default {
 
      profilUpdate() {
       this.showloader = true
-      // window.location.reload();
-      //    this.modifyPictureUserInprogress = false
       let formData = new FormData();
       formData.append("fullname", this.fullname);
       formData.append("photo", this.photo);
       this.$axios
         .put(`/api/user/${this.userid}`, formData)
-
-      //  axios
-      //   .put(`http://localhost:5000/api/user/${this.userid}`, formData)
         .catch((errors, test) => {
           this.maxsize = errors.response.data.errors.maxsize;
           this.format = errors.response.data.errors.format;
@@ -402,8 +388,6 @@ export default {
       formData.append("photo", this.photo);
       formData.append("posterId",this.userid)
         this.$axios.put(`/api/user/${this.userid}`, formData)
-      //  axios
-        // .put(`http://localhost:5000/api/user/${this.userid}`, formData)
         .catch((errors, test) => {
           console.log(errors);
         })
@@ -442,21 +426,16 @@ export default {
 
     getPosts() {
     this.$axios.get(`/api/post/postby/${this.userjwtid}`)
-      // axios.get(`http://localhost:5000/api/post/postby/${this.userjwtid}`)
         .then((doc)=>{
           this.pub= doc.data
-          console.log(doc.data);
         })
     },
 
     getFollowBack(id) {
     this.$axios.patch(`/api/user/follow/${this.userid}`, { idToFollow: id })
-      // axios.patch(`http://localhost:5000/api/user/follow/${this.userid}`, { idToFollow: id })
       .then(()=>{
          this.$axios
             .get(`/api/user/${this.userjwtid}`)
-        // axios
-        //     .get(`http://localhost:5000/api/user/${this.userjwtid}`)
             .then((docs) => {
               this.follower = docs.data.followers;
               this.following = docs.data.following;
@@ -467,7 +446,6 @@ export default {
         })
         .then(() => {
             this.$axios.get(`/api/user/${id}`)
-            // axios.get(`http://localhost:5000/api/user/${id}`)
             .then((docs)=>{
               this.followId = docs.data._id
               this.followLastname = docs.data.lastname;
@@ -481,20 +459,15 @@ export default {
 
     getUnFollowBack(id) {
     this.$axios.patch(`/api/user/unfollow/${this.userid}`, { idToUnFollow: id })
-      // axios.patch(`http://localhost:5000/api/user/unfollow/${this.userid}`, { idToUnFollow: id })
         .then(() => {
            this.$axios
             .get(`/api/user/${this.userjwtid}`)
-          // axios
-          //   .get(`http://localhost:5000/api/user/${this.userjwtid}`)
             .then((docs) => {
               this.follower = docs.data.followers;
               this.following = docs.data.following;
-              // console.log(this.follower);
             }).catch((error) => {console.log(error);
             }).then(() => {
               this.$axios.get(`/api/user/${id}`)
-            // axios.get(`http://localhost:5000/api/user/${id}`)
             .then((docs)=>{
               this.followId = docs.data._id
               this.followLastname = docs.data.lastname;
@@ -535,8 +508,6 @@ export default {
     axios.defaults.withCredentials = true;
 await this.$axios
       .get(`/jwtid`)
-    // await axios
-    //   .get(`http://localhost:5000/jwtid`)
       .then((res) => {
         this.userjwtid = res.data;
         this.show = true;
@@ -548,8 +519,6 @@ await this.$axios
     
     await this.$axios
         .get(`/api/user/${this.userjwtid}`)
-    // await axios
-    //   .get(`http://localhost:5000/api/user/${this.userjwtid}`)
       .then((docs) => {
         this.userid = docs.data._id;
         this.firstname = docs.data.firstname;
@@ -565,7 +534,6 @@ await this.$axios
       .then(() => {
         this.follower.forEach((i, u, l) => {
           this.$axios.get(`/api/user/${i}`)
-          // axios.get(`http://localhost:5000/api/user/${i}`)
             .then((docs) => {
               this.followId = docs.data._id
               this.followLastname = docs.data.lastname;
@@ -582,9 +550,7 @@ await this.$axios
       .then(() => {
         this.following.forEach((i) => {
         this.$axios.get(`/api/user/${i}`)
-          // axios.get(`http://localhost:5000/api/user/${i}`)
             .then((docs) => {
-              console.log(docs);
               this.followingId = docs.data._id
               this.followingLastname = docs.data.lastname;
               this.followingFirstname = docs.data.firstname;
@@ -598,11 +564,8 @@ await this.$axios
         console.log(error);
       })
     this.$axios.get(`/api/post/postby/${this.userjwtid}`)
-      
-      // axios.get(`http://localhost:5000/api/post/postby/${this.userjwtid}`)
         .then((doc)=>{
           this.pub= doc.data
-          console.log(doc.data);
         })
     this.getcolor();
   },
